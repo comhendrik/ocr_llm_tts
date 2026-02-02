@@ -1,11 +1,22 @@
 import wave
+import numpy as np
+import sounddevice as sd
 from piper import PiperVoice
 
-VOICE_PATH = "piperVoices/de_DE-thorsten-medium.onnx"
+def tts_to_wav(voice: PiperVoice, text: str, out_path: str) -> None:
+    with wave.open(out_path, "wb") as wav_file:
+        voice.synthesize_wav(text, wav_file)
 
-voice = PiperVoice.load(VOICE_PATH)
+def tts_live(voice: PiperVoice, text: str) -> None:
+    sr = int(voice.config.sample_rate)
+    with sd.OutputStream(samplerate=sr, channels=1, dtype="int16") as stream:
+        for chunk in voice.synthesize(text):
+            audio = np.frombuffer(chunk.audio_int16_bytes, dtype=np.int16).reshape(-1, 1)
+            stream.write(audio)
 
-with wave.open("output.wav", "wb") as wav_file:
-    voice.synthesize_wav("Moin zusammen, das ist der erste Test.", wav_file)
+if __name__ == "__main__":
+    VOICE_PATH = "piperVoices/de_DE-thorsten-medium.onnx"
+    voice = PiperVoice.load(VOICE_PATH)
 
-print("Fertig: output.wav")
+    tts_live(voice, "Moin zusammen, hier einmal der Livetest")
+    tts_to_wav(voice, "Und hier einmal das ganze als Datei", "output.wav")
