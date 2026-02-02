@@ -4,3 +4,4 @@ EnglishFnt/
 output/
 output_words
 testing/
+__pycache__
