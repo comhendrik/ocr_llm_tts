@@ -1,42 +1,12 @@
-import subprocess
-import winsound
-from pathlib import Path
+import wave
+from piper import PiperVoice
 
+# Wichtig unter Windows: raw string r"..." oder doppelte Backslashes
+VOICE_PATH = "piperVoices/de_DE-thorsten-medium.onnx"
 
-BASE_DIR = Path(__file__).parent
-MODEL_DIR = BASE_DIR / "piperVoices"
+voice = PiperVoice.load(VOICE_PATH)
 
-MODEL = MODEL_DIR / "de_DE-thorsten-medium.onnx"
-CONFIG = MODEL_DIR / "de_DE-thorsten-medium.onnx.json"
-OUTPUT_WAV = BASE_DIR / "output.wav"
+with wave.open("output.wav", "wb") as wav_file:
+    voice.synthesize_wav("Moin Niklas, das ist ein Test mit Piper.", wav_file)
 
-def text_to_speech(text: str):
-    if not text.strip():
-        raise ValueError("Text ist leer")
-
-    if not MODEL.exists():
-        raise FileNotFoundError("ONNX-Modell fehlt")
-    if not CONFIG.exists():
-        raise FileNotFoundError("JSON-Konfig fehlt")
-
-    cmd = [
-        "piper",
-        "--model", str(MODEL),
-        "--config", str(CONFIG),
-        "--output_file", str(OUTPUT_WAV)
-    ]
-
-    process = subprocess.Popen(
-        cmd,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        text=True
-    )
-
-    process.communicate(text)
-
-    if not OUTPUT_WAV.exists():
-        raise RuntimeError("Audio wurde nicht erzeugt")
-
-    winsound.PlaySound(str(OUTPUT_WAV), winsound.SND_FILENAME)
+print("Fertig: output.wav")
