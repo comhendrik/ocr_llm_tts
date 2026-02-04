@@ -5,9 +5,9 @@ from generate_text import tts_live
 
 def main() -> None:
     print("image is processed")
-    text = detect_text_in_image("images/IMG_5276.JPEG")
+    text = detect_text_in_image("images/image5.png")
     print("llm is asked")
-    prompt = "Simplify the follwing text into easier language and 4 sentences" + text
+    prompt = "Simplify the following text into easier language and 4 sentences: " + text
     result = run_ollama_request(prompt)
     print("tts is loading")
     tts_live(result)
