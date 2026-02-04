@@ -7,7 +7,7 @@ from splitting import split_image_into_characters
 # --------------------------
 # Configuration
 # --------------------------
-MODEL_PATH = "ocr_text_model.keras"
+MODEL_PATH = "models/model_3_layers.keras"
 IMG_SIZE = 64
 
 # Define your label map (Index -> Character)
@@ -87,6 +87,7 @@ def reconstruct_text_from_memory(images_array, model_path):
         # Join words with a space to form the line
         full_line_text = " ".join(line_text_parts)
         full_text_lines.append(full_line_text)
+        print(f"Line {line_idx}: {full_line_text}")
 
     # --------------------------
     # Final Output

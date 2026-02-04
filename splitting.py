@@ -147,7 +147,7 @@ def split_image_into_characters(image_path, save_images=True):
             median_gap = np.median(gaps)
             normal_char_gaps = [g for g in gaps if g < median_gap * 3]
             avg_char_gap = sum(normal_char_gaps) / len(normal_char_gaps) if normal_char_gaps else median_gap
-            space_threshold = avg_char_gap * 1.5 
+            space_threshold = avg_char_gap * 1.25 
         else:
             space_threshold = 1000 
 
