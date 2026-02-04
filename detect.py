@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import os
 import tensorflow as tf
-from splitting_tesseract import process_image_hybrid
+from splitting import split_image_into_characters
 
 # --------------------------
 # Configuration
@@ -87,7 +87,6 @@ def reconstruct_text_from_memory(images_array, model_path):
         # Join words with a space to form the line
         full_line_text = " ".join(line_text_parts)
         full_text_lines.append(full_line_text)
-        print(f"Line {line_idx}: {full_line_text}")
 
     # --------------------------
     # Final Output
@@ -107,7 +106,7 @@ def detect_text_in_image(image_path: str) -> str:
     """
     # Step 1: Get the data structure (No saving to disk needed for logic)
     # We set save_images=False to speed it up, or True if you still want debug images.
-    images_array = process_image_hybrid(image_path, save_images=False)
+    images_array = split_image_into_characters(image_path, save_images=False)
     
     if not images_array:
         return "Error: No text detected or image load failed."

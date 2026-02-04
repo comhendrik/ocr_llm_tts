@@ -9,7 +9,6 @@ def main() -> None:
     print("llm is asked")
     prompt = "Simplify the follwing text into easier language and 4 sentences" + text
     result = run_ollama_request(prompt)
-    print(result)
     print("tts is loading")
     tts_live(result)
 

@@ -61,21 +61,17 @@ def get_segments(data, axis):
         
     return segments
 
-# --------------------------
-# Main Processing Logic
-# --------------------------
 
-def process_image_hybrid(image_path, save_images=True):
+def split_image_into_characters(image_path, save_images=True):
     """
     Returns: A nested list structure: [ Lines [ Words [ Characters (numpy arrays) ] ] ]
     """
-    output_dir = "processed_structure_hybrid"
+    output_dir = "characters"
     
     # Setup Output Directory only if saving
     if save_images:
         if os.path.exists(output_dir): shutil.rmtree(output_dir)
         os.makedirs(output_dir)
-        print(f"Directory created at: {os.path.abspath(output_dir)}")
 
     # 1. Load Image
     img = cv2.imread(image_path)
@@ -89,8 +85,6 @@ def process_image_hybrid(image_path, save_images=True):
     # ---------------------------------------------------------
     # STEP A: Detect Lines using PYTESSERACT
     # ---------------------------------------------------------
-    if save_images:
-        print("Detecting lines with Tesseract...")
     
     d = pytesseract.image_to_data(gray, config='--psm 6', output_type=Output.DICT)
     
@@ -211,7 +205,6 @@ def process_image_hybrid(image_path, save_images=True):
 
     if save_images:
         cv2.imwrite("debug_lines_tesseract.jpg", debug_img)
-        print(f"Processing Complete. Data Saved to: {os.path.abspath(output_dir)}")
     
     return all_lines_data
 
