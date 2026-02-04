@@ -3,11 +3,14 @@ import pytesseract
 import numpy as np
 import os
 import shutil
+import platform
 from pytesseract import Output
 
 # --------------------------
 # Helper Functions
 # --------------------------
+if platform.system() == 'Windows':
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 def resize_and_pad(img, size=64, padding=10):
     """
