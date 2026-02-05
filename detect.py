@@ -1,13 +1,11 @@
 import cv2
 import numpy as np
-import os
 import tensorflow as tf
-from splitting import split_image_into_characters
 
 # --------------------------
 # Configuration
 # --------------------------
-MODEL_PATH = "models/model_3_layers.keras"
+
 IMG_SIZE = 64
 
 # Define your label map (Index -> Character)
@@ -22,7 +20,7 @@ LABELS = list(chars_lower + chars_upper + numbers + german_specials + punctuatio
 # Helper Functions
 # --------------------------
 
-def predict_from_memory(model, img_array):
+def predict_from_images(model, img_array):
     """
     Takes a pre-loaded numpy image array (64x64), preprocesses it, 
     and returns the predicted character.
@@ -54,7 +52,7 @@ def predict_from_memory(model, img_array):
     else:
         return "?"
 
-def reconstruct_text_from_memory(images_array, model_path):
+def reconstruct_text_from_images(images_array, model_path):
     """
     Iterates through the nested list structure provided by process_image_hybrid.
     Structure: [ Lines [ Words [ Characters (Images) ] ] ]
@@ -79,7 +77,7 @@ def reconstruct_text_from_memory(images_array, model_path):
             
             # 3. Iterate Characters (Numpy Arrays)
             for char_img in word_chars:
-                predicted_char = predict_from_memory(model, char_img)
+                predicted_char = predict_from_images(model, char_img)
                 word_string += predicted_char
             
             line_text_parts.append(word_string)
@@ -94,23 +92,3 @@ def reconstruct_text_from_memory(images_array, model_path):
     # --------------------------
     final_output = "\n".join(full_text_lines)
     return final_output
-
-# --------------------------
-# Main Entry Point
-# --------------------------
-
-def detect_text_in_image(image_path: str) -> str:
-    """
-    1. Processes the image to extract character arrays (in memory).
-    2. Passes those arrays to the neural network for prediction.
-    3. Returns the full reconstructed text.
-    """
-    # Step 1: Get the data structure (No saving to disk needed for logic)
-    # We set save_images=False to speed it up, or True if you still want debug images.
-    images_array = split_image_into_characters(image_path, save_images=False)
-    
-    if not images_array:
-        return "Error: No text detected or image load failed."
-
-    # Step 2: Reconstruct text from the array
-    return reconstruct_text_from_memory(images_array, MODEL_PATH)

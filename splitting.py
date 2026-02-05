@@ -3,14 +3,11 @@ import pytesseract
 import numpy as np
 import os
 import shutil
-import platform
 from pytesseract import Output
 
 # --------------------------
 # Helper Functions
 # --------------------------
-if platform.system() == 'Windows':
-    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 def resize_and_pad(img, size=64, padding=10):
     """
@@ -147,7 +144,7 @@ def split_image_into_characters(image_path, save_images=True):
             median_gap = np.median(gaps)
             normal_char_gaps = [g for g in gaps if g < median_gap * 3]
             avg_char_gap = sum(normal_char_gaps) / len(normal_char_gaps) if normal_char_gaps else median_gap
-            space_threshold = avg_char_gap * 1.25 
+            space_threshold = avg_char_gap * 2
         else:
             space_threshold = 1000 
 
@@ -210,5 +207,3 @@ def split_image_into_characters(image_path, save_images=True):
         cv2.imwrite("debug_lines_tesseract.jpg", debug_img)
     
     return all_lines_data
-
-
