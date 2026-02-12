@@ -20,15 +20,18 @@ def main() -> None:
 ### INSTRUCTIONS
 Rewrite the text below into **{LANGUAGE}**.
 1. Simplify the vocabulary and sentence structure to a **5th-grade reading level**.
-2. Summarize the content into **strictly 4 sentences**.
-3. Do not add any introductory or concluding conversational filler (like "Here is the text").
+2. Summarize the content into **maximum 4 sentences**.
+3. Do not add any introductory or concluding conversational filler (like "Here is the text"). This is the most important, only return one german sentence block
+4. Do not use any points, just sentences
+5. ONLY SIMPLIFY THE TEXT, DO NOT ADD ANY INFORMATION THAT IS NOT PROVIDED: ONLY RETURN A SIMPLIFIED VERSION OF THE TEXT IN MAXIMUM 4 SENTENCES
 
 ### INPUT TEXT
 {text}
 
-### OUTPUT ({LANGUAGE})
+### OUTPUT should be in this language ({LANGUAGE})
 """
     result = run_ollama_request(prompt)
+    print(result)
 
     print("STEP 4/4: TTS GENERATION")
     tts_live(result)
