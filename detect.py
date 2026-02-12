@@ -12,8 +12,8 @@ IMG_SIZE = 64
 chars_lower = "abcdefghijklmnopqrstuvwxyz"
 chars_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 numbers = "0123456789"
-german_specials = "ß"
-punctuation = ".,;:!?()+-"
+german_specials = ""
+punctuation = ".,:!?()'"
 LABELS = list(chars_lower + chars_upper + numbers + german_specials + punctuation)
 
 # --------------------------
