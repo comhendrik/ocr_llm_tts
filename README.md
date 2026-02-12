@@ -1,10 +1,3 @@
-Installtion
-
-1. sudo apt-get install libportaudio2
-2. ollama
-3. tesseract
----
-
 ### Schritt 1: System-Abhängigkeiten installieren
 
 Bevor Python installiert wird, müssen die externen Programme auf dem Betriebssystem vorhanden sein.
@@ -49,7 +42,7 @@ Ollama muss als Hintergrunddienst laufen, damit dein Python-Skript (über die Li
 2. **Modell herunterladen:**
 Führe im Terminal folgenden Befehl aus, um das spezifische Modell lokal zu speichern:
 ```bash
-ollama pull gemma3:1b
+ollama pull gemma3:3b
 
 ```
 
@@ -131,13 +124,13 @@ pip install -r requirements.txt
 
 Sobald alles installiert ist und die Umgebung **aktiviert** ist (das `(.venv)` ist sichtbar), startest du dein Hauptskript einfach so:
 
-```bash
-python dein_skript_name.py
+In diesem Skript kann dann des genutzte Bild angepasst werden. Lege ein Bild im Ordner images ab und referenziere es unter 
 
+```python
+IMAGE_PATH = "images/example.png"
 ```
 
-Das Skript wird nun automatisch:
+```bash
+python main.py
 
-1. Auf **Tesseract** zugreifen (da es im System installiert ist).
-2. Auf **PortAudio** zugreifen (da die Libs installiert sind).
-3. Sich mit dem laufenden **Ollama-Server** verbinden und `gemma3:1b` nutzen.
+```
