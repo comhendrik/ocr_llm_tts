@@ -3,7 +3,7 @@ from generate_text import tts_live
 from splitting import split_image_into_characters
 from detect import reconstruct_text_from_images
 
-MODEL_PATH = "models/model_4_layers_2000_german.keras"
+MODEL_PATH = "models/model_4_layers.keras"
 IMAGE_PATH = "images/image5.png"
 LANGUAGE = "German"
 
