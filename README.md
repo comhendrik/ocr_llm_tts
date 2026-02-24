@@ -1,3 +1,7 @@
+#### OCR_LLM_TTS
+
+Dies ist ein Projekt im Modul Fortgeschrittene KI-Anwendungen, welches verwendet wird, um Texte per OCR-Modell zu erkennen und dann zu vereinfachen und auditiv auszugeben. Folgende Anleitung hilft bei der Installation.
+
 ### Schritt 1: System-Abhängigkeiten installieren
 
 Bevor Python installiert wird, müssen die externen Programme auf dem Betriebssystem vorhanden sein.
